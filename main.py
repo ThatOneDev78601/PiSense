@@ -1,21 +1,19 @@
+#Variables
 from sense_hat import SenseHat
 from gpiozero import CPUTemperature
 from datetime import datetime
-import sys
 from ISStreamer.Streamer import Streamer
+bkey = "2fb27f6a-84c8-44c5-9c6e-3d61da431579" #Made key viewable in file directory because I doubt anyone will view it. However in a proper project should be in as an environmental variable
+key = "ist_1cvQJOd60hKx0j_IViCDjwXp-rdHl4MB"
+import sys
 import time
 import math
-sense = SenseHat()
-bkey = "2fb27f6a-84c8-44c5-9c6e-3d61da431579"
-key = "ist_1cvQJOd60hKx0j_IViCDjwXp-rdHl4MB"
-logger = Streamer(bucket_name="RPI SENSE HAT DATA", bucket_key=bkey, access_key=key)
-print(logger.log("TEST", 33))
-white = (128,128,128)
-red = (128,0,0)
-off = (0,0,0)
 
+sense = SenseHat()
+logger = Streamer(bucket_name="RPI SENSE HAT DATA", bucket_key=bkey, access_key=key)
 flashon = False
 
+#Functions
 def flashlight():
     global flashon
     if flashon == False:
@@ -42,7 +40,6 @@ def getpressure():
     ps = sense.get_pressure()
     logger.log("Pressure:", ps)
     return math.floor(ps)
-#flashlight()
 
 def handle_events(movement):
 
@@ -75,7 +72,7 @@ def handle_events(movement):
         sense.show_message(f"{hour}:{minute}")
         pass
 
-#sense.show_message(f'Temp is: {gettemp()}')
+
 sense.clear()
 while True:
 
